@@ -14,7 +14,7 @@
   --shadow-lg:0 2px 6px rgba(18,32,26,.06), 0 24px 48px -28px rgba(18,32,26,.4);
   --r:14px; --r-sm:10px; --r-lg:20px;
   --mono:"SF Mono","JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
-  --sans:"SF Arabic","Geeza Pro","Noto Sans Arabic","Segoe UI",Tahoma,system-ui,-apple-system,sans-serif;
+  --sans:var(--font-ibm-plex-arabic),"IBM Plex Sans Arabic","SF Arabic","Geeza Pro","Noto Sans Arabic","Segoe UI",Tahoma,system-ui,-apple-system,sans-serif;
   --head-h:64px;
 }
 @media (prefers-color-scheme: dark){

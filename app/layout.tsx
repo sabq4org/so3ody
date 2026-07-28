@@ -1,5 +1,14 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
+
+// خط سبق — IBM Plex Sans Arabic (يُستضاف ذاتيًا عبر next/font، بلا وميض)
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ibm-plex-arabic",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +29,7 @@ const noFlash = `(function(){try{var t=localStorage.getItem('theme');if(t){docum
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className={ibmPlexArabic.variable}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: noFlash }} />
       </head>
