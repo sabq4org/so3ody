@@ -15,7 +15,7 @@ const Star = ({ filled }: { filled: boolean }) => (
   </svg>
 );
 
-export function SurveyForm() {
+export function SurveyForm({ onSubmitted }: { onSubmitted: () => void }) {
   const [role, setRole] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const [hoverStar, setHoverStar] = useState<number>(0);
@@ -29,7 +29,6 @@ export function SurveyForm() {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
 
   const canSubmit = useMemo(() => role !== "" && rating >= 1 && !submitting, [role, rating, submitting]);
 
@@ -52,33 +51,12 @@ export function SurveyForm() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || "تعذّر الإرسال");
-      setDone(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      onSubmitted();
     } catch (err) {
       setError(err instanceof Error ? err.message : "حدث خطأ، حاول مجددًا");
     } finally {
       setSubmitting(false);
     }
-  }
-
-  if (done) {
-    return (
-      <div className="sv-card">
-        <div className="sv-thanks">
-          <div className="mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4}>
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-          </div>
-          <h2>وصلنا رأيك — شكرًا لك!</h2>
-          <p>
-            مساهمتك أصبحت جزءًا من قرارات تطوير سعودي سبورت القادمة. نقرأ كل ردّ بعناية، ونعمل على
-            استكمال النجاح بما يليق بروّاد المنصة.
-          </p>
-          <a href="https://www.so3ody.com">تصفّح سعودي سبورت ←</a>
-        </div>
-      </div>
-    );
   }
 
   return (
