@@ -20,6 +20,12 @@
 .sv-stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 20px;box-shadow:var(--shadow)}
 .sv-stat b{display:block;font-family:var(--mono);font-size:22px;font-weight:800;color:var(--green)}
 .sv-stat span{font-size:12.5px;color:var(--muted)}
+@media(max-width:560px){
+  .sv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px}
+  .sv-stat{padding:11px 6px;border-radius:11px;text-align:center}
+  .sv-stat b{font-size:14.5px;letter-spacing:-.02em}
+  .sv-stat span{font-size:10px;line-height:1.35}
+}
 
 /* ---------- form card ---------- */
 .sv-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);
