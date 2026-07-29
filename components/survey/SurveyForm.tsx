@@ -15,7 +15,22 @@ const Star = ({ filled }: { filled: boolean }) => (
   </svg>
 );
 
+// معرّف مشاركة ثابت لكل تعبئة — يمنع تكرار الرد عند إعادة المحاولة/النقر المتعدد
+function genUUID(): string {
+  try {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  } catch {
+    /* fall through */
+  }
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 export function SurveyForm({ onSubmitted }: { onSubmitted: () => void }) {
+  const [participationId] = useState(genUUID);
   const [role, setRole] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const [hoverStar, setHoverStar] = useState<number>(0);
@@ -47,7 +62,7 @@ export function SurveyForm({ onSubmitted }: { onSubmitted: () => void }) {
       const res = await fetch("/api/survey", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, contact, role, overallRating: rating, nps, features, likes, suggestions, consent }),
+        body: JSON.stringify({ participationId, name, contact, role, overallRating: rating, nps, features, likes, suggestions, consent }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || "تعذّر الإرسال");
